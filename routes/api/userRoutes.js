@@ -5,15 +5,32 @@ const {
     getSingleUser,
     createUser,
     updateUser,
-    deleteUser
-}   = require('../../controllers/user-controller');
+    deleteUser,
+    addFriend,
+    deleteFriend,
+}   = require('../../controllers/userController');
+// const {
+//     getThoughts, getSingleThought, createThought, updateThought, deleteThought
+// } = require('../../controllers/thoughtController');
 
-router.route('/').get(getUsers).post(createUser);
+// api/users
+router.route('/')
+    .get(getUsers)
+    .post(createUser)
 
-router.route('/:id').get(getSingleUser).put(updateUser).delete(deleteUser);
+// api/users/:userId
+router.route('/:Userid')
+    .get(getSingleUser)
+    .put(updateUser)
+    .delete(deleteUser);
 
-router.route('/:userId/thoughts/:thoughtId').delete(deleteThought);
+// api/users/:userId/thoughts/:thoughtId
+//router.route('/:userId/thoughts/:thoughtId').delete(deleteThought);
 
-router.route('/:userId/friends/:friendId').post(addFriend).delete(removeFriend);
+//api/users/:userId/friends
+router.route('/:userId/friends').post(addFriend);
+
+//api/users/:userId/friends/:friendId
+router.route('/:userId/friends/:friendId').delete(deleteFriend);
 
 module.exports = router;
