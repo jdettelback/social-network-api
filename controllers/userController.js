@@ -28,8 +28,7 @@ module.exports = {
         !user
           ? res.status(404).json({ message: "No user found with this id" })
           : res.status(200).json(user);
-      }
-      )
+      })
       .catch((err) => {
         console.log(err + "problem getting single user");
         res.status(500).json("problem getting single user");
@@ -51,7 +50,7 @@ module.exports = {
         !user
           ? res.status(404).json({ message: "No user found with this id" })
           : Thoughts.deleteMany({ _id: { $in: user.thoughts } })
-        )
+      )
       .then((thought) =>
         !thought
           ? res.status(404).json({
@@ -61,8 +60,8 @@ module.exports = {
       )
       .catch((err) => {
         console.log(err);
-        res.status(500).json("problem deleting user")}
-      );
+        res.status(500).json("problem deleting user");
+      });
   },
 
   // api/users/:id  update user(put)
@@ -98,6 +97,43 @@ module.exports = {
         console.log(err);
         res.status(500).json("problem adding friend");
       });
+  },
+
+  linkFriends(req, res) {
+    console.log(req.params.userId);
+    console.log(req.params.friendId);
+    User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $addToSet: { friends: req.params.friendId } },
+      { new: true }
+    )
+      .then((user) => {
+        if (!user)
+          return res
+            .status(404)
+            .json({ message: "No user found with this id" });
+      })
+      .catch((err) => {
+        console.log(err);
+        return res.status(500).json("problem adding friend to user");
+      });
+
+    User.findOneAndUpdate(
+      { _id: req.params.friendId },
+      { $addToSet: { friends: req.params.userId } },
+      { new: true }
+    )
+      .then((friend) => {
+        if (!friend)
+          return res
+            .status(404)
+            .json({ message: "No friend found with this id" });    
+ })
+      .catch((err) => {
+        console.log(err);
+        return res.status(500).json("problem adding user to friend");
+      });
+      res.json({message: "friend and user linked"})
   },
 
   // api/users/:userId/friends/:friendId  delete friend
