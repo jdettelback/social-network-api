@@ -7,11 +7,8 @@ const {
     updateUser,
     deleteUser,
     linkFriends,
-    deleteFriend,
+    unlinkFriends,
 }   = require('../../controllers/userController');
-// const {
-//     getThoughts, getSingleThought, createThought, updateThought, deleteThought
-// } = require('../../controllers/thoughtController');
 
 // api/users
 router.route('/')
@@ -24,13 +21,10 @@ router.route('/:userId')
     .put(updateUser)
     .delete(deleteUser);
 
-// api/users/:userId/thoughts/:thoughtId
-//router.route('/:userId/thoughts/:thoughtId').delete(deleteThought);
-
 //api/users/:userId/friends/:friendId
 router.route('/:userId/friends/:friendId').post(linkFriends);
 
 //api/users/:userId/friends/:friendId
-router.route('/:userId/friends/:friendId').delete(deleteFriend);
+router.route('/:userId/friends/:friendId').delete(unlinkFriends);
 
 module.exports = router;

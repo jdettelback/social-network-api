@@ -11,7 +11,7 @@ This application uses an Express.js back end to connect to a NoSQL database to h
 
 Since this website is not deployed, a walkthrough using Insomnia is linked below. The walkthrough demonstrates the GET routes for all users, an individual user, a POST route for adding a user, a PUT route for changing a user's information and a DELETE route for removing a user.
 
-It also demonstrates adding and deleting a Friend for the user.
+It also demonstrates adding and deleting a Friend for the user. When a Friend is added, the user and the Friend are linked so they reciprocally show up as a Friend to each other.
 
 Th video also shows the GET routes for all thoughts, the GET route for an individual thought, a POST route for adding a thought, a PUT route for changing a thought and a DELETE route for removing a thought.
 

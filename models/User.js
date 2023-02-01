@@ -7,18 +7,13 @@ const userSchema = new Schema(
       type: String,
       unique: true,
       required: true,
-      trim: true,
+      trim: true
     },
     email: {
       type: String,
       unique: true,
       required: true,
-      match: /.+\@.+\..+/,
-
-      // validate: {
-      //   validator: () => Promise.resolve(false),
-      //   message: "Email validation failed",
-      // },
+      match: /.+\@.+\..+/
     },
     thoughts: [
       {
@@ -37,7 +32,6 @@ const userSchema = new Schema(
     toJSON: {
       virtuals: true,
     },
-    id: false,
   }
 );
 

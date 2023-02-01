@@ -1,4 +1,4 @@
-const { ObjectId } = require("mongoose").Types;
+//const { ObjectId } = require("mongoose").Types;
 const { User, Thoughts } = require("../models");
 
 module.exports = {
@@ -79,26 +79,7 @@ module.exports = {
       .catch((err) => res.status(500).json("problem updating user"));
   },
 
-  // api/users/:userId/friends/:friendId  add friend
-  addFriend(req, res) {
-    console.log(req.params.userId);
-    console.log(req.params.friendId);
-    User.findOneAndUpdate(
-      { _id: req.params.userId },
-      { $addToSet: { friends: req.params.friendId } },
-      { new: true }
-    )
-      .then((user) =>
-        !user
-          ? res.status(404).json({ message: "No user found with this id" })
-          : res.json(user)
-      )
-      .catch((err) => {
-        console.log(err);
-        res.status(500).json("problem adding friend");
-      });
-  },
-
+  // api/users/:userId/friends/:friendId  link friends
   linkFriends(req, res) {
     console.log(req.params.userId);
     console.log(req.params.friendId);
@@ -127,27 +108,50 @@ module.exports = {
         if (!friend)
           return res
             .status(404)
-            .json({ message: "No friend found with this id" });    
- })
+            .json({ message: "No friend found with this id" });
+      })
       .catch((err) => {
         console.log(err);
         return res.status(500).json("problem adding user to friend");
       });
-      res.json({message: "friend and user linked"})
+    res.json({ message: "friend and user linked" });
   },
 
-  // api/users/:userId/friends/:friendId  delete friend
-  deleteFriend(req, res) {
+  // api/users/:userId/friends/:friendId  unlink friends
+  unlinkFriends(req, res) {
+    console.log(req.params.userId);
+    console.log(req.params.friendId);
     User.findOneAndUpdate(
-      { id: req.params.userId },
+      { _id: req.params.userId },
       { $pull: { friends: req.params.friendId } },
       { new: true }
     )
-      .then((user) =>
-        !user
-          ? res.status(404).json({ message: "No user found with this id" })
-          : res.json(user)
-      )
-      .catch((err) => res.status(500).json("problem deleting friend"));
+      .then((user) => {
+        if (!user)
+          return res
+            .status(404)
+            .json({ message: "No user found with this id" });
+      })
+      .catch((err) => {
+        console.log(err);
+        return res.status(500).json("problem adding friend to user");
+      });
+
+    User.findOneAndUpdate(
+      { _id: req.params.friendId },
+      { $pull: { friends: req.params.userId } },
+      { new: true }
+    )
+      .then((friend) => {
+        if (!friend)
+          return res
+            .status(404)
+            .json({ message: "No friend found with this id" });
+      })
+      .catch((err) => {
+        console.log(err);
+        return res.status(500).json("problem adding user to friend");
+      });
+    res.json({ message: "friend and user unlinked" });
   },
 };
