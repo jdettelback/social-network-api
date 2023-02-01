@@ -19,7 +19,7 @@ router.route('/')
     .post(createUser)
 
 // api/users/:userId
-router.route('/:Userid')
+router.route('/:userId')
     .get(getSingleUser)
     .put(updateUser)
     .delete(deleteUser);
@@ -27,8 +27,8 @@ router.route('/:Userid')
 // api/users/:userId/thoughts/:thoughtId
 //router.route('/:userId/thoughts/:thoughtId').delete(deleteThought);
 
-//api/users/:userId/friends
-router.route('/:userId/friends').post(addFriend);
+//api/users/:userId/friends/:friendId
+router.route('/:userId/friends/:friendId').post(addFriend);
 
 //api/users/:userId/friends/:friendId
 router.route('/:userId/friends/:friendId').delete(deleteFriend);

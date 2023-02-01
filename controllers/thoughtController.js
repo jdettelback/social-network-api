@@ -60,7 +60,9 @@ module.exports = {
             })
           : res.json({ message: "Thought and user deleted" })
       )
-      .catch((err) => res.status(500).json("problem deleting thought"));
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json("problem deleting thought")});
   },
 
   // api/thoughts/:id  update thought(put)
