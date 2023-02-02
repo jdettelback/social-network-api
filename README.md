@@ -20,15 +20,15 @@ It also shows adding and deleting a reaction to a thought.
 ## Contact
 Contact me at [jdettelback@gmail.com](mailto:jdettelback@gmail.com) if you have any questions.  You can see more of my work at <https://github.com/jdettelback>.
 
-![screenshot](https://raw.githubusercontent.com/jdettelback/social-network/main/images/screenshotsocialnetwork.png)
+![screenshot](https://raw.githubusercontent.com/jdettelback/social-network-api/main/images/screenshotsocialnetwork.png)
 
-![screenshot](https://raw.githubusercontent.com/jdettelback/social-network/main/images/screenshotsocialnetwork2.png)
+![screenshot](https://raw.githubusercontent.com/jdettelback/social-network-api/main/images/screenshotsocialnetwork2.png)
 
-![screenshot](https://raw.githubusercontent.com/jdettelback/social-network/main/images/screenshotsocialnetwork3.png)
+![screenshot](https://raw.githubusercontent.com/jdettelback/social-network-api/main/images/screenshotsocialnetwork3.png)
 
-![screenshot](https://raw.githubusercontent.com/jdettelback/social-network/main/images/screenshotsocialnetwork4.png)
+![screenshot](https://raw.githubusercontent.com/jdettelback/social-network-api/main/images/screenshotsocialnetwork4.png)
 
-![screenshot](https://raw.githubusercontent.com/jdettelback/social-network/main/images/screenshotsocialnetwork5.png)
+![screenshot](https://raw.githubusercontent.com/jdettelback/social-network-api/main/images/screenshotsocialnetwork5.png)
 
 Video walkthrough:
 
