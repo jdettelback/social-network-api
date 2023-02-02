@@ -20,7 +20,7 @@ module.exports = {
 
   // api/thoughts/:id  get single thought
   getSingleThought(req, res) {
-    Thoughts.findOne({ _id: req.params.id })
+    Thoughts.findOne({ _id: req.params.thoughtId })
       .select("-__v")
       .then(async (thought) =>
         !thought
@@ -38,44 +38,47 @@ module.exports = {
     Thoughts.create(req.body)
       .then((thought) => res.json(thought))
       .catch((err) => res.status(500).json("problem creating thought" + err));
-      console.log(req.body);
+    console.log(req.body);
   },
 
   // api/thoughts/:id  update thought(put)
   deleteThought(req, res) {
-    Thoughts.findOneAndRemove({ _id: req.params.id })
-      .then((thought) =>
-        !thought
-          ? res.status(404).json({ message: "No thought found with this id" })
-          : User.findOneAndUpdate(
-              { thoughts: req.params.thoughtId },
-              { $pull: { thoughts: req.params.thoughtId } },
-              { new: true }
-            )
-      )
-      .then((user) =>
-        !user
-          ? res.status(404).json({
-              message: "Thought deleted but no user found with this id",
-            })
-          : res.json({ message: "Thought and user deleted" })
-      )
+    console.log(req.params.thoughtId);
+
+    Thoughts.findOneAndRemove({ _id: req.params.thoughtId })
+      .then((thought) => {
+        if (!thought)
+          return res
+            .status(404)
+            .json({ message: "No thought found with this id" });
+      })
+      // .then((thought) => {
+      //   console.log(thought);
+
       .catch((err) => {
         console.log(err);
-        res.status(500).json("problem deleting thought")});
+        res.status(500).json("problem deleting thought");
+      });
+      
+    User.findOneAndUpdate(
+      { _id: { $in: req.params.thoughtId } },
+      { $pull: { thoughts: req.params.thoughtId } },
+      { new: true }
+    );
+    return res.json({ message: "Thought deleted" });
   },
 
-  // api/thoughts/:id  update thought(put)
+  // api/thoughts/:thoughtId  update thought(put)
   updateThought(req, res) {
     Thoughts.findOneAndUpdate(
-      { _id: req.params.id },
+      { _id: req.params.thoughtId },
       { $set: req.body },
       { runValidators: true, new: true }
     )
       .then((thought) =>
         !thought
           ? res.status(404).json({ message: "No thought found with this id" })
-          : res.json({message: 'thought updated'})
+          : res.json({ message: "thought updated" })
       )
       .catch((err) => res.status(500).json("problem updating thought"));
   },
@@ -104,7 +107,9 @@ module.exports = {
     console.log(req.body);
     Thoughts.findOneAndUpdate(
       { _id: req.params.thoughtId },
-      { $pull: { reactions: { reactionId: { $in: [req.params.reactionId] } } } },
+      {
+        $pull: { reactions: { reactionId: { $in: [req.params.reactionId] } } },
+      },
       { runValidators: true, new: true }
     )
       .then((thought) =>
